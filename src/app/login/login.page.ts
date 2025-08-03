@@ -21,7 +21,7 @@ import {
 } from '@ionic/angular/standalone';
 import { AuthService } from '../services/auth.service';
 import { addIcons } from 'ionicons';
-import { logInOutline } from 'ionicons/icons';
+import { logInOutline, shieldCheckmarkOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-login',
@@ -62,7 +62,7 @@ export class LoginPage implements OnInit {
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
-    addIcons({ logInOutline });
+    addIcons({ logInOutline, shieldCheckmarkOutline });
   }
 
   ngOnInit() {

@@ -1,31 +1,93 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonButtons } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonButton,
+  IonIcon,
+  IonButtons,
+  IonSearchbar,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonFab,
+  IonFabButton
+} from '@ionic/angular/standalone';
 import { AuthService } from '../services/auth.service';
+import { Photo, PhotoService } from '../services/photo.service';
 import { addIcons } from 'ionicons';
-import { logOutOutline } from 'ionicons/icons';
+import { logOutOutline, addOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonButtons]
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    IonButton,
+    IonIcon,
+    IonButtons,
+    IonSearchbar,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonFab,
+    IonFabButton
+  ]
 })
-export class HomePage implements OnInit {
+export class HomePage {
 
-  constructor(private router: Router, private authService: AuthService) {
-    addIcons({ logOutOutline });
+  private photoService = inject(PhotoService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  private photos = this.photoService.getPhotos();
+  private searchQuery = signal('');
+
+  public filteredPhotos = computed(() => {
+    const query = this.searchQuery().toLowerCase();
+    if (query === '') {
+      return this.photos();
+    }
+    return this.photos().filter(photo =>
+      photo.title.toLowerCase().includes(query)
+    );
+  });
+
+  constructor() {
+    addIcons({ logOutOutline, addOutline });
   }
 
-  ngOnInit() {
+  handleSearch(event: any) {
+    this.searchQuery.set(event.target.value);
+  }
+
+  goToDetail(photoId: string) {
+    this.router.navigate(['/photo-detail', photoId]);
+  }
+
+  goToAddPhoto() {
+    this.router.navigate(['/add-photo']);
   }
 
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
-
 }

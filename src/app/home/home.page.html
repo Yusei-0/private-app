@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      Home
+      My Vault
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="logout()">
@@ -9,11 +9,36 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar placeholder="Search by title" (ionInput)="handleSearch($event)"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="ion-text-center">
-    <h1>Welcome to SecureVault!</h1>
-    <p>Your private photo gallery.</p>
+
+  <div *ngIf="filteredPhotos().length === 0" class="empty-state">
+    <ion-icon name="images-outline"></ion-icon>
+    <h2>No Photos Found</h2>
+    <p>Your vault is empty. Tap the '+' button to add a photo.</p>
   </div>
+
+  <ion-grid *ngIf="filteredPhotos().length > 0">
+    <ion-row>
+      <ion-col size="6" size-md="4" size-lg="3" *ngFor="let photo of filteredPhotos()">
+        <ion-card button (click)="goToDetail(photo.id)">
+          <img [src]="photo.imageUrl" />
+          <ion-card-header>
+            <ion-card-title>{{ photo.title }}</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="goToAddPhoto()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

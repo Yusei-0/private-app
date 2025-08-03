@@ -7,8 +7,11 @@
 <ion-content class="ion-padding">
   <div class="login-container">
     <ion-card>
-      <ion-card-header>
-        <ion-card-title class="ion-text-center">Welcome!</ion-card-title>
+      <ion-card-header class="ion-text-center">
+        <div class="logo-container">
+          <ion-icon name="shield-checkmark-outline" color="primary"></ion-icon>
+        </div>
+        <ion-card-title>Welcome!</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <form [formGroup]="loginForm" (ngSubmit)="login()">

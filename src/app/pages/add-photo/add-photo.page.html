@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add New Photo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="submitForm()" [disabled]="addPhotoForm.invalid">
+        <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="addPhotoForm">
+    <ion-item>
+      <ion-label position="floating">Title</ion-label>
+      <ion-input formControlName="title" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea formControlName="description" rows="4"></ion-textarea>
+    </ion-item>
+    <div class="ion-padding-top ion-text-center">
+      <ion-button color="light" expand="block">
+        <ion-icon slot="start" name="image-outline"></ion-icon>
+        Select Image (Simulated)
+      </ion-button>
+    </div>
+  </form>
+</ion-content>
