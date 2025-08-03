@@ -19,12 +19,14 @@ import {
   IonCardTitle,
   IonFab,
   IonFabButton,
-  LoadingController
+  LoadingController,
+  ModalController
 } from '@ionic/angular/standalone';
 import { AuthService } from '../services/auth.service';
 import { Photo, PhotoService } from '../services/photo.service';
 import { addIcons } from 'ionicons';
-import { logOutOutline, addOutline, shieldCheckmarkOutline } from 'ionicons/icons';
+import { logOutOutline, addOutline, shieldCheckmarkOutline, settingsOutline } from 'ionicons/icons';
+import { DecryptingLoaderComponent } from '../components/decrypting-loader/decrypting-loader.component';
 
 @Component({
   selector: 'app-home',
@@ -49,7 +51,8 @@ import { logOutOutline, addOutline, shieldCheckmarkOutline } from 'ionicons/icon
     IonCardHeader,
     IonCardTitle,
     IonFab,
-    IonFabButton
+    IonFabButton,
+    DecryptingLoaderComponent
   ]
 })
 export class HomePage {
@@ -58,6 +61,7 @@ export class HomePage {
   private authService = inject(AuthService);
   private router = inject(Router);
   private loadingController = inject(LoadingController);
+  private modalController = inject(ModalController);
 
   private photos = this.photoService.getPhotos();
   private searchQuery = signal('');
@@ -73,7 +77,7 @@ export class HomePage {
   });
 
   constructor() {
-    addIcons({ logOutOutline, addOutline, shieldCheckmarkOutline });
+    addIcons({ logOutOutline, addOutline, shieldCheckmarkOutline, settingsOutline });
   }
 
   handleSearch(event: any) {
@@ -88,9 +92,33 @@ export class HomePage {
     this.router.navigate(['/add-photo']);
   }
 
+  goToSettings() {
+    this.router.navigate(['/settings']);
+  }
+
+  async decrypt(photoId: string) {
+    const modal = await this.modalController.create({
+      component: DecryptingLoaderComponent,
+      backdropDismiss: false,
+      cssClass: 'decrypting-modal'
+    });
+    await modal.present();
+
+    const interval = setInterval(() => {
+      const currentProgress = modal.componentInstance.progress;
+      if (currentProgress < 1) {
+        modal.componentInstance.progress += 0.1;
+      } else {
+        clearInterval(interval);
+        modal.dismiss();
+        this.photoService.decryptPhoto(photoId);
+      }
+    }, 150);
+  }
+
   async logout() {
     const loading = await this.loadingController.create({
-      message: 'Securely logging out...',
+      message: 'Cerrando sesión de forma segura...',
       duration: 1000
     });
     await loading.present();

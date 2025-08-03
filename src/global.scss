@@ -35,3 +35,8 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+// Custom modal style for the decrypting loader
+.decrypting-modal .modal-wrapper {
+  background: rgba(0, 0, 0, 0.5);
+}

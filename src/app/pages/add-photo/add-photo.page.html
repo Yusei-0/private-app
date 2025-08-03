@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Add New Photo</ion-title>
+    <ion-title>Añadir Nueva Foto</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="submitForm()" [disabled]="addPhotoForm.invalid">
         <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
@@ -15,11 +15,11 @@
 <ion-content class="ion-padding">
   <form [formGroup]="addPhotoForm">
     <ion-item>
-      <ion-label position="floating">Title</ion-label>
+      <ion-label position="floating">Título</ion-label>
       <ion-input formControlName="title" required></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Description</ion-label>
+      <ion-label position="floating">Descripción</ion-label>
       <ion-textarea formControlName="description" rows="4"></ion-textarea>
     </ion-item>
 
@@ -33,7 +33,7 @@
       </div>
       <ion-button color="light" expand="block" (click)="triggerFileInput(fileInput)">
         <ion-icon slot="start" name="image-outline"></ion-icon>
-        {{ imagePreview() ? 'Change Image' : 'Select Image' }}
+        {{ imagePreview() ? 'Cambiar Imagen' : 'Seleccionar Imagen' }}
       </ion-button>
     </div>
 

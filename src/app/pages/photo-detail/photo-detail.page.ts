@@ -59,15 +59,15 @@ export class PhotoDetailPage {
 
   async deletePhoto() {
     const alert = await this.alertController.create({
-      header: 'Confirm Deletion',
-      message: 'Are you sure you want to delete this photo?',
+      header: 'Confirmar Eliminación',
+      message: '¿Estás seguro de que quieres eliminar esta foto?',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel'
         },
         {
-          text: 'Delete',
+          text: 'Eliminar',
           handler: () => {
             this.photoService.deletePhoto(this.photoId());
             this.router.navigate(['/home']);

@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ photo()?.title || 'Photo Detail' }}</ion-title>
+    <ion-title>{{ photo()?.title || 'Detalle de la Foto' }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="goToEdit()">
         <ion-icon slot="icon-only" name="create-outline"></ion-icon>
@@ -20,11 +20,10 @@
     <ion-img [src]="p.imageUrl"></ion-img>
     <div class="ion-padding">
       <h1>{{ p.title }}</h1>
-      <p>{{ p.description }}</p>
     </div>
   </div>
 
   <div *ngIf="!photo()" class="ion-padding ion-text-center">
-    <p>Photo not found.</p>
+    <p>Foto no encontrada.</p>
   </div>
 </ion-content>

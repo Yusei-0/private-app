@@ -1,16 +1,19 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      My Vault
+      Mi Bóveda
     </ion-title>
     <ion-buttons slot="end">
+      <ion-button (click)="goToSettings()">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
       <ion-button (click)="logout()">
         <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar placeholder="Search by title" (ionInput)="handleSearch($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Buscar por título" (ionInput)="handleSearch($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -18,19 +21,22 @@
 
   <div *ngIf="filteredPhotos().length === 0" class="empty-state">
     <ion-icon name="images-outline"></ion-icon>
-    <h2>No Photos Found</h2>
-    <p>Your vault is empty. Tap the '+' button to add a photo.</p>
+    <h2>No se encontraron fotos</h2>
+    <p>Tu bóveda está vacía. Pulsa el botón '+' para añadir una foto.</p>
   </div>
 
   <ion-grid *ngIf="filteredPhotos().length > 0">
     <ion-row>
       <ion-col size="6" size-md="4" size-lg="3" *ngFor="let photo of filteredPhotos()">
-        <ion-card button (click)="goToDetail(photo.id)">
-          <div class="image-container">
+        <ion-card>
+          <div class="image-container" [class.blurred]="!photo.isDecrypted" (click)="!photo.isDecrypted || goToDetail(photo.id)">
             <img [src]="photo.imageUrl" />
             <ion-icon name="shield-checkmark-outline" class="secure-icon" color="success"></ion-icon>
+            <ion-button *ngIf="!photo.isDecrypted" class="decrypt-button" (click)="decrypt(photo.id); $event.stopPropagation();">
+              Desencriptar
+            </ion-button>
           </div>
-          <ion-card-header>
+          <ion-card-header (click)="goToDetail(photo.id)">
             <ion-card-title>{{ photo.title }}</ion-card-title>
           </ion-card-header>
         </ion-card>

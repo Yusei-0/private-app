@@ -1,0 +1,9 @@
+<div class="loader-container">
+  <ion-text color="primary">
+    <h3>Desencriptando...</h3>
+  </ion-text>
+  <ion-progress-bar [value]="progress"></ion-progress-bar>
+  <ion-text color="medium">
+    <p>{{ (progress * 100).toFixed(0) }}%</p>
+  </ion-text>
+</div>

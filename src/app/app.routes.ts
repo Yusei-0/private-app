@@ -31,4 +31,9 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/edit-photo/edit-photo.page').then( m => m.EditPhotoPage),
     canActivate: [authGuard]
   },
+  {
+    path: 'settings',
+    loadComponent: () => import('./pages/settings/settings.page').then( m => m.SettingsPage),
+    canActivate: [authGuard]
+  },
 ];

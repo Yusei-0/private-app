@@ -88,7 +88,7 @@ export class AddPhotoPage {
     }
 
     const loading = await this.loadingController.create({
-      message: 'Encrypting photo...',
+      message: 'Encriptando foto...',
       spinner: 'crescent'
     });
     await loading.present();

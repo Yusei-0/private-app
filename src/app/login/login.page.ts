@@ -74,7 +74,7 @@ export class LoginPage implements OnInit {
     }
 
     const loading = await this.loadingController.create({
-      message: 'Logging in...',
+      message: 'Iniciando sesión...',
     });
     await loading.present();
 
@@ -87,7 +87,7 @@ export class LoginPage implements OnInit {
         this.authService.login();
 
         const securityLoading = await this.loadingController.create({
-          message: 'Performing security checks...',
+          message: 'Realizando comprobaciones de seguridad...',
           spinner: 'dots'
         });
         await securityLoading.present();
@@ -99,8 +99,8 @@ export class LoginPage implements OnInit {
 
       } else {
         const alert = await this.alertController.create({
-          header: 'Login Failed',
-          message: 'Invalid username or password.',
+          header: 'Fallo de autenticación',
+          message: 'Usuario o contraseña no válidos.',
           buttons: ['OK'],
         });
         await alert.present();
