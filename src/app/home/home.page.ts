@@ -102,18 +102,15 @@ export class HomePage {
       backdropDismiss: false,
       cssClass: 'decrypting-modal'
     });
+
     await modal.present();
 
-    const interval = setInterval(() => {
-      const currentProgress = (modal as any).componentInstance.progress;
-      if (currentProgress < 1) {
-        (modal as any).componentInstance.progress += 0.1;
-      } else {
-        clearInterval(interval);
-        modal.dismiss();
-        this.photoService.decryptPhoto(photoId);
-      }
-    }, 150);
+    // The modal will dismiss itself when its internal progress is complete.
+    // We just wait for it to be dismissed.
+    const { role } = await modal.onDidDismiss();
+
+    // Now we can safely update the photo state
+    this.photoService.decryptPhoto(photoId);
   }
 
   async logout() {
