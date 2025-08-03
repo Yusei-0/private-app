@@ -8,6 +8,7 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
+      require('karma-puppeteer-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma')
@@ -37,7 +38,13 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    browsers: ['Puppeteer'],
+    customLaunchers: {
+      'Puppeteer': {
+        base: 'Puppeteer',
+        flags: ['--no-sandbox', '--disable-setuid-sandbox']
+      }
+    },
     singleRun: false,
     restartOnFileChange: true
   });

@@ -23,6 +23,7 @@
     "@angular/router": "^20.0.0",
     "@ionic/angular": "^8.0.0",
     "ionicons": "^7.0.0",
+    "puppeteer": "^24.15.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -52,6 +53,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "karma-puppeteer-launcher": "^1.0.4",
     "typescript": "~5.8.0"
   },
   "description": "A secure photo vault application."
