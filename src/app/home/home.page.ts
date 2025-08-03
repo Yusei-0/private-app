@@ -105,9 +105,9 @@ export class HomePage {
     await modal.present();
 
     const interval = setInterval(() => {
-      const currentProgress = modal.componentInstance.progress;
+      const currentProgress = (modal as any).componentInstance.progress;
       if (currentProgress < 1) {
-        modal.componentInstance.progress += 0.1;
+        (modal as any).componentInstance.progress += 0.1;
       } else {
         clearInterval(interval);
         modal.dismiss();
