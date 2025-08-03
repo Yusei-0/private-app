@@ -18,12 +18,13 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonFab,
-  IonFabButton
+  IonFabButton,
+  LoadingController
 } from '@ionic/angular/standalone';
 import { AuthService } from '../services/auth.service';
 import { Photo, PhotoService } from '../services/photo.service';
 import { addIcons } from 'ionicons';
-import { logOutOutline, addOutline } from 'ionicons/icons';
+import { logOutOutline, addOutline, shieldCheckmarkOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -56,6 +57,7 @@ export class HomePage {
   private photoService = inject(PhotoService);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private loadingController = inject(LoadingController);
 
   private photos = this.photoService.getPhotos();
   private searchQuery = signal('');
@@ -71,7 +73,7 @@ export class HomePage {
   });
 
   constructor() {
-    addIcons({ logOutOutline, addOutline });
+    addIcons({ logOutOutline, addOutline, shieldCheckmarkOutline });
   }
 
   handleSearch(event: any) {
@@ -86,8 +88,16 @@ export class HomePage {
     this.router.navigate(['/add-photo']);
   }
 
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+  async logout() {
+    const loading = await this.loadingController.create({
+      message: 'Securely logging out...',
+      duration: 1000
+    });
+    await loading.present();
+
+    setTimeout(() => {
+      this.authService.logout();
+      this.router.navigate(['/login']);
+    }, 1000);
   }
 }

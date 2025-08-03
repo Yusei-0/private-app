@@ -22,11 +22,20 @@
       <ion-label position="floating">Description</ion-label>
       <ion-textarea formControlName="description" rows="4"></ion-textarea>
     </ion-item>
+
+    <!-- Hidden File Input -->
+    <input type="file" #fileInput hidden="true" (change)="onFileChange($event)" accept="image/*" />
+
+    <!-- Image Preview and Selection Button -->
     <div class="ion-padding-top ion-text-center">
-      <ion-button color="light" expand="block">
+      <div class="image-preview-container" *ngIf="imagePreview()">
+        <ion-img [src]="imagePreview()"></ion-img>
+      </div>
+      <ion-button color="light" expand="block" (click)="triggerFileInput(fileInput)">
         <ion-icon slot="start" name="image-outline"></ion-icon>
-        Select Image (Simulated)
+        {{ imagePreview() ? 'Change Image' : 'Select Image' }}
       </ion-button>
     </div>
+
   </form>
 </ion-content>

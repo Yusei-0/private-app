@@ -85,7 +85,18 @@ export class LoginPage implements OnInit {
       await loading.dismiss();
       if ((username === 'admin' || username === 'vivi123') && password === '123') {
         this.authService.login();
-        this.router.navigate(['/home']);
+
+        const securityLoading = await this.loadingController.create({
+          message: 'Performing security checks...',
+          spinner: 'dots'
+        });
+        await securityLoading.present();
+
+        setTimeout(() => {
+          securityLoading.dismiss();
+          this.router.navigate(['/home']);
+        }, 1500);
+
       } else {
         const alert = await this.alertController.create({
           header: 'Login Failed',
@@ -94,6 +105,6 @@ export class LoginPage implements OnInit {
         });
         await alert.present();
       }
-    }, 1500);
+    }, 1000);
   }
 }

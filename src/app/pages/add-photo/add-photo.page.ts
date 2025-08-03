@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,11 +14,13 @@ import {
   IonLabel,
   IonInput,
   IonTextarea,
-  IonBackButton
+  IonBackButton,
+  IonImg,
+  LoadingController
 } from '@ionic/angular/standalone';
 import { PhotoService } from 'src/app/services/photo.service';
 import { addIcons } from 'ionicons';
-import { checkmarkOutline } from 'ionicons/icons';
+import { checkmarkOutline, imageOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-add-photo',
@@ -40,7 +42,8 @@ import { checkmarkOutline } from 'ionicons/icons';
     IonLabel,
     IonInput,
     IonTextarea,
-    IonBackButton
+    IonBackButton,
+    IonImg
   ]
 })
 export class AddPhotoPage {
@@ -48,21 +51,53 @@ export class AddPhotoPage {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private photoService = inject(PhotoService);
+  private loadingController = inject(LoadingController);
 
   addPhotoForm: FormGroup;
+  imagePreview = signal<string | null>(null);
 
   constructor() {
     this.addPhotoForm = this.fb.group({
       title: ['', Validators.required],
-      description: ['']
+      description: [''],
+      imageUrl: [null, Validators.required]
     });
-    addIcons({ checkmarkOutline });
+    addIcons({ checkmarkOutline, imageOutline });
   }
 
-  submitForm() {
-    if (this.addPhotoForm.valid) {
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result as string;
+        this.imagePreview.set(result);
+        this.addPhotoForm.patchValue({ imageUrl: result });
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  triggerFileInput(fileInput: HTMLInputElement) {
+    fileInput.click();
+  }
+
+  async submitForm() {
+    if (this.addPhotoForm.invalid) {
+      return;
+    }
+
+    const loading = await this.loadingController.create({
+      message: 'Encrypting photo...',
+      spinner: 'crescent'
+    });
+    await loading.present();
+
+    // Simulate encryption time
+    setTimeout(() => {
+      loading.dismiss();
       this.photoService.addPhoto(this.addPhotoForm.value);
       this.router.navigate(['/home']);
-    }
+    }, 2000);
   }
 }

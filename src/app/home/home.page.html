@@ -26,7 +26,10 @@
     <ion-row>
       <ion-col size="6" size-md="4" size-lg="3" *ngFor="let photo of filteredPhotos()">
         <ion-card button (click)="goToDetail(photo.id)">
-          <img [src]="photo.imageUrl" />
+          <div class="image-container">
+            <img [src]="photo.imageUrl" />
+            <ion-icon name="shield-checkmark-outline" class="secure-icon" color="success"></ion-icon>
+          </div>
           <ion-card-header>
             <ion-card-title>{{ photo.title }}</ion-card-title>
           </ion-card-header>

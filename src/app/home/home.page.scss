@@ -20,6 +20,20 @@ ion-card {
   }
 }
 
+.image-container {
+  position: relative;
+
+  .secure-icon {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    font-size: 1.5rem;
+    background-color: rgba(var(--ion-color-dark-rgb), 0.5);
+    border-radius: 50%;
+    padding: 4px;
+  }
+}
+
 .empty-state {
   display: flex;
   flex-direction: column;

@@ -34,12 +34,12 @@ export class PhotoService {
     return this._photos().find(p => p.id === id);
   }
 
-  addPhoto(photoData: { title: string; description: string; }) {
+  addPhoto(photoData: { title: string; description: string; imageUrl: string; }) {
     const newPhoto: Photo = {
       id: new Date().getTime().toString(), // simple unique id
       title: photoData.title,
       description: photoData.description,
-      imageUrl: `https://picsum.photos/seed/${new Date().getTime()}/600/400` // a new random image
+      imageUrl: photoData.imageUrl
     };
     this._photos.update(photos => [...photos, newPhoto]);
   }
